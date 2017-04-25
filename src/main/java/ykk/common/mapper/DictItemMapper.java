@@ -1,6 +1,6 @@
-package com.ykk;
+package ykk.common.mapper;
 
-import com.ykk.DictItem;
+import ykk.common.domain.DictItem;
 
 public interface DictItemMapper {
     int deleteByPrimaryKey(Long itemId);

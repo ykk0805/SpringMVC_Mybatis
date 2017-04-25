@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.ykk.DictMapper" >
-  <resultMap id="BaseResultMap" type="com.ykk.Dict" >
-    <id column="DICT_ID" property="dictId" jdbcType="DECIMAL" />
-    <result column="DICT_NAME" property="dictName" jdbcType="VARCHAR" />
-    <result column="DICT_CODE" property="dictCode" jdbcType="VARCHAR" />
-    <result column="PARENT_DICT_ID" property="parentDictId" jdbcType="DECIMAL" />
+<mapper namespace="ykk.common.mapper.DictItemMapper" >
+  <resultMap id="BaseResultMap" type="ykk.common.domain.DictItem" >
+    <id column="ITEM_ID" property="itemId" jdbcType="DECIMAL" />
+    <result column="DICT_ID" property="dictId" jdbcType="DECIMAL" />
+    <result column="ITEM_CODE" property="itemCode" jdbcType="VARCHAR" />
+    <result column="ITEM_NAME" property="itemName" jdbcType="VARCHAR" />
+    <result column="SN_NO" property="snNo" jdbcType="DECIMAL" />
+    <result column="LANGUAGE" property="language" jdbcType="VARCHAR" />
     <result column="SEQ" property="seq" jdbcType="DECIMAL" />
     <result column="SHOW_FLAG" property="showFlag" jdbcType="VARCHAR" />
-    <result column="SITE_ID" property="siteId" jdbcType="DECIMAL" />
     <result column="REMARK" property="remark" jdbcType="VARCHAR" />
     <result column="CREATE_TIME" property="createTime" jdbcType="DATE" />
     <result column="CREATE_USER" property="createUser" jdbcType="DECIMAL" />
@@ -16,54 +17,57 @@
     <result column="UPDATE_USER" property="updateUser" jdbcType="DECIMAL" />
   </resultMap>
   <sql id="Base_Column_List" >
-    DICT_ID, DICT_NAME, DICT_CODE, PARENT_DICT_ID, SEQ, SHOW_FLAG, SITE_ID, REMARK, CREATE_TIME, 
-    CREATE_USER, UPDATE_TIME, UPDATE_USER
+    ITEM_ID, DICT_ID, ITEM_CODE, ITEM_NAME, SN_NO, LANGUAGE, SEQ, SHOW_FLAG, REMARK, 
+    CREATE_TIME, CREATE_USER, UPDATE_TIME, UPDATE_USER
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
-    from UPIOW.TBL_DICT
-    where DICT_ID = #{dictId,jdbcType=DECIMAL}
+    from UPIOW.TBL_DICT_ITEM
+    where ITEM_ID = #{itemId,jdbcType=DECIMAL}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
-    delete from UPIOW.TBL_DICT
-    where DICT_ID = #{dictId,jdbcType=DECIMAL}
+    delete from UPIOW.TBL_DICT_ITEM
+    where ITEM_ID = #{itemId,jdbcType=DECIMAL}
   </delete>
-  <insert id="insert" parameterType="com.ykk.Dict" >
-    insert into UPIOW.TBL_DICT (DICT_ID, DICT_NAME, DICT_CODE, 
-      PARENT_DICT_ID, SEQ, SHOW_FLAG, 
-      SITE_ID, REMARK, CREATE_TIME, 
-      CREATE_USER, UPDATE_TIME, UPDATE_USER
-      )
-    values (#{dictId,jdbcType=DECIMAL}, #{dictName,jdbcType=VARCHAR}, #{dictCode,jdbcType=VARCHAR}, 
-      #{parentDictId,jdbcType=DECIMAL}, #{seq,jdbcType=DECIMAL}, #{showFlag,jdbcType=VARCHAR}, 
-      #{siteId,jdbcType=DECIMAL}, #{remark,jdbcType=VARCHAR}, #{createTime,jdbcType=DATE}, 
-      #{createUser,jdbcType=DECIMAL}, #{updateTime,jdbcType=DATE}, #{updateUser,jdbcType=DECIMAL}
-      )
+  <insert id="insert" parameterType=ykk.common.domain.DictItem >
+    insert into UPIOW.TBL_DICT_ITEM (ITEM_ID, DICT_ID, ITEM_CODE, 
+      ITEM_NAME, SN_NO, LANGUAGE, 
+      SEQ, SHOW_FLAG, REMARK, 
+      CREATE_TIME, CREATE_USER, UPDATE_TIME, 
+      UPDATE_USER)
+    values (#{itemId,jdbcType=DECIMAL}, #{dictId,jdbcType=DECIMAL}, #{itemCode,jdbcType=VARCHAR}, 
+      #{itemName,jdbcType=VARCHAR}, #{snNo,jdbcType=DECIMAL}, #{language,jdbcType=VARCHAR}, 
+      #{seq,jdbcType=DECIMAL}, #{showFlag,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=DATE}, #{createUser,jdbcType=DECIMAL}, #{updateTime,jdbcType=DATE}, 
+      #{updateUser,jdbcType=DECIMAL})
   </insert>
-  <insert id="insertSelective" parameterType="com.ykk.Dict" >
-    insert into UPIOW.TBL_DICT
+  <insert id="insertSelective" parameterType="ykk.common.domain.DictItem" >
+    insert into UPIOW.TBL_DICT_ITEM
     <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="itemId != null" >
+        ITEM_ID,
+      </if>
       <if test="dictId != null" >
         DICT_ID,
       </if>
-      <if test="dictName != null" >
-        DICT_NAME,
+      <if test="itemCode != null" >
+        ITEM_CODE,
       </if>
-      <if test="dictCode != null" >
-        DICT_CODE,
+      <if test="itemName != null" >
+        ITEM_NAME,
       </if>
-      <if test="parentDictId != null" >
-        PARENT_DICT_ID,
+      <if test="snNo != null" >
+        SN_NO,
+      </if>
+      <if test="language != null" >
+        LANGUAGE,
       </if>
       <if test="seq != null" >
         SEQ,
       </if>
       <if test="showFlag != null" >
         SHOW_FLAG,
-      </if>
-      <if test="siteId != null" >
-        SITE_ID,
       </if>
       <if test="remark != null" >
         REMARK,
@@ -82,26 +86,29 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="itemId != null" >
+        #{itemId,jdbcType=DECIMAL},
+      </if>
       <if test="dictId != null" >
         #{dictId,jdbcType=DECIMAL},
       </if>
-      <if test="dictName != null" >
-        #{dictName,jdbcType=VARCHAR},
+      <if test="itemCode != null" >
+        #{itemCode,jdbcType=VARCHAR},
       </if>
-      <if test="dictCode != null" >
-        #{dictCode,jdbcType=VARCHAR},
+      <if test="itemName != null" >
+        #{itemName,jdbcType=VARCHAR},
       </if>
-      <if test="parentDictId != null" >
-        #{parentDictId,jdbcType=DECIMAL},
+      <if test="snNo != null" >
+        #{snNo,jdbcType=DECIMAL},
+      </if>
+      <if test="language != null" >
+        #{language,jdbcType=VARCHAR},
       </if>
       <if test="seq != null" >
         #{seq,jdbcType=DECIMAL},
       </if>
       <if test="showFlag != null" >
         #{showFlag,jdbcType=VARCHAR},
-      </if>
-      <if test="siteId != null" >
-        #{siteId,jdbcType=DECIMAL},
       </if>
       <if test="remark != null" >
         #{remark,jdbcType=VARCHAR},
@@ -120,26 +127,29 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.ykk.Dict" >
-    update UPIOW.TBL_DICT
+  <update id="updateByPrimaryKeySelective" parameterType="ykk.common.domain.DictItem" >
+    update UPIOW.TBL_DICT_ITEM
     <set >
-      <if test="dictName != null" >
-        DICT_NAME = #{dictName,jdbcType=VARCHAR},
+      <if test="dictId != null" >
+        DICT_ID = #{dictId,jdbcType=DECIMAL},
       </if>
-      <if test="dictCode != null" >
-        DICT_CODE = #{dictCode,jdbcType=VARCHAR},
+      <if test="itemCode != null" >
+        ITEM_CODE = #{itemCode,jdbcType=VARCHAR},
       </if>
-      <if test="parentDictId != null" >
-        PARENT_DICT_ID = #{parentDictId,jdbcType=DECIMAL},
+      <if test="itemName != null" >
+        ITEM_NAME = #{itemName,jdbcType=VARCHAR},
+      </if>
+      <if test="snNo != null" >
+        SN_NO = #{snNo,jdbcType=DECIMAL},
+      </if>
+      <if test="language != null" >
+        LANGUAGE = #{language,jdbcType=VARCHAR},
       </if>
       <if test="seq != null" >
         SEQ = #{seq,jdbcType=DECIMAL},
       </if>
       <if test="showFlag != null" >
         SHOW_FLAG = #{showFlag,jdbcType=VARCHAR},
-      </if>
-      <if test="siteId != null" >
-        SITE_ID = #{siteId,jdbcType=DECIMAL},
       </if>
       <if test="remark != null" >
         REMARK = #{remark,jdbcType=VARCHAR},
@@ -157,21 +167,22 @@
         UPDATE_USER = #{updateUser,jdbcType=DECIMAL},
       </if>
     </set>
-    where DICT_ID = #{dictId,jdbcType=DECIMAL}
+    where ITEM_ID = #{itemId,jdbcType=DECIMAL}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.ykk.Dict" >
-    update UPIOW.TBL_DICT
-    set DICT_NAME = #{dictName,jdbcType=VARCHAR},
-      DICT_CODE = #{dictCode,jdbcType=VARCHAR},
-      PARENT_DICT_ID = #{parentDictId,jdbcType=DECIMAL},
+  <update id="updateByPrimaryKey" parameterType="ykk.common.domain.DictItem" >
+    update UPIOW.TBL_DICT_ITEM
+    set DICT_ID = #{dictId,jdbcType=DECIMAL},
+      ITEM_CODE = #{itemCode,jdbcType=VARCHAR},
+      ITEM_NAME = #{itemName,jdbcType=VARCHAR},
+      SN_NO = #{snNo,jdbcType=DECIMAL},
+      LANGUAGE = #{language,jdbcType=VARCHAR},
       SEQ = #{seq,jdbcType=DECIMAL},
       SHOW_FLAG = #{showFlag,jdbcType=VARCHAR},
-      SITE_ID = #{siteId,jdbcType=DECIMAL},
       REMARK = #{remark,jdbcType=VARCHAR},
       CREATE_TIME = #{createTime,jdbcType=DATE},
       CREATE_USER = #{createUser,jdbcType=DECIMAL},
       UPDATE_TIME = #{updateTime,jdbcType=DATE},
       UPDATE_USER = #{updateUser,jdbcType=DECIMAL}
-    where DICT_ID = #{dictId,jdbcType=DECIMAL}
+    where ITEM_ID = #{itemId,jdbcType=DECIMAL}
   </update>
 </mapper>

@@ -1,23 +1,21 @@
-package com.ykk;
+package ykk.common.domain;
 
 import java.util.Date;
 
-public class DictItem {
-    private Long itemId;
-
+public class Dict {
     private Long dictId;
 
-    private String itemCode;
+    private String dictName;
 
-    private String itemName;
+    private String dictCode;
 
-    private Long snNo;
-
-    private String language;
+    private Long parentDictId;
 
     private Long seq;
 
     private String showFlag;
+
+    private Long siteId;
 
     private String remark;
 
@@ -29,14 +27,6 @@ public class DictItem {
 
     private Long updateUser;
 
-    public Long getItemId() {
-        return itemId;
-    }
-
-    public void setItemId(Long itemId) {
-        this.itemId = itemId;
-    }
-
     public Long getDictId() {
         return dictId;
     }
@@ -45,36 +35,28 @@ public class DictItem {
         this.dictId = dictId;
     }
 
-    public String getItemCode() {
-        return itemCode;
+    public String getDictName() {
+        return dictName;
     }
 
-    public void setItemCode(String itemCode) {
-        this.itemCode = itemCode == null ? null : itemCode.trim();
+    public void setDictName(String dictName) {
+        this.dictName = dictName == null ? null : dictName.trim();
     }
 
-    public String getItemName() {
-        return itemName;
+    public String getDictCode() {
+        return dictCode;
     }
 
-    public void setItemName(String itemName) {
-        this.itemName = itemName == null ? null : itemName.trim();
+    public void setDictCode(String dictCode) {
+        this.dictCode = dictCode == null ? null : dictCode.trim();
     }
 
-    public Long getSnNo() {
-        return snNo;
+    public Long getParentDictId() {
+        return parentDictId;
     }
 
-    public void setSnNo(Long snNo) {
-        this.snNo = snNo;
-    }
-
-    public String getLanguage() {
-        return language;
-    }
-
-    public void setLanguage(String language) {
-        this.language = language == null ? null : language.trim();
+    public void setParentDictId(Long parentDictId) {
+        this.parentDictId = parentDictId;
     }
 
     public Long getSeq() {
@@ -91,6 +73,14 @@ public class DictItem {
 
     public void setShowFlag(String showFlag) {
         this.showFlag = showFlag == null ? null : showFlag.trim();
+    }
+
+    public Long getSiteId() {
+        return siteId;
+    }
+
+    public void setSiteId(Long siteId) {
+        this.siteId = siteId;
     }
 
     public String getRemark() {
