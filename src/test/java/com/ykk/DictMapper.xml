@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ykk.DictMapper" >
+  <resultMap id="BaseResultMap" type="com.ykk.Dict" >
+    <id column="DICT_ID" property="dictId" jdbcType="DECIMAL" />
+    <result column="DICT_NAME" property="dictName" jdbcType="VARCHAR" />
+    <result column="DICT_CODE" property="dictCode" jdbcType="VARCHAR" />
+    <result column="PARENT_DICT_ID" property="parentDictId" jdbcType="DECIMAL" />
+    <result column="SEQ" property="seq" jdbcType="DECIMAL" />
+    <result column="SHOW_FLAG" property="showFlag" jdbcType="VARCHAR" />
+    <result column="SITE_ID" property="siteId" jdbcType="DECIMAL" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="DATE" />
+    <result column="CREATE_USER" property="createUser" jdbcType="DECIMAL" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="DATE" />
+    <result column="UPDATE_USER" property="updateUser" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    DICT_ID, DICT_NAME, DICT_CODE, PARENT_DICT_ID, SEQ, SHOW_FLAG, SITE_ID, REMARK, CREATE_TIME, 
+    CREATE_USER, UPDATE_TIME, UPDATE_USER
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from UPIOW.TBL_DICT
+    where DICT_ID = #{dictId,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from UPIOW.TBL_DICT
+    where DICT_ID = #{dictId,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.ykk.Dict" >
+    insert into UPIOW.TBL_DICT (DICT_ID, DICT_NAME, DICT_CODE, 
+      PARENT_DICT_ID, SEQ, SHOW_FLAG, 
+      SITE_ID, REMARK, CREATE_TIME, 
+      CREATE_USER, UPDATE_TIME, UPDATE_USER
+      )
+    values (#{dictId,jdbcType=DECIMAL}, #{dictName,jdbcType=VARCHAR}, #{dictCode,jdbcType=VARCHAR}, 
+      #{parentDictId,jdbcType=DECIMAL}, #{seq,jdbcType=DECIMAL}, #{showFlag,jdbcType=VARCHAR}, 
+      #{siteId,jdbcType=DECIMAL}, #{remark,jdbcType=VARCHAR}, #{createTime,jdbcType=DATE}, 
+      #{createUser,jdbcType=DECIMAL}, #{updateTime,jdbcType=DATE}, #{updateUser,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ykk.Dict" >
+    insert into UPIOW.TBL_DICT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="dictId != null" >
+        DICT_ID,
+      </if>
+      <if test="dictName != null" >
+        DICT_NAME,
+      </if>
+      <if test="dictCode != null" >
+        DICT_CODE,
+      </if>
+      <if test="parentDictId != null" >
+        PARENT_DICT_ID,
+      </if>
+      <if test="seq != null" >
+        SEQ,
+      </if>
+      <if test="showFlag != null" >
+        SHOW_FLAG,
+      </if>
+      <if test="siteId != null" >
+        SITE_ID,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="updateUser != null" >
+        UPDATE_USER,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="dictId != null" >
+        #{dictId,jdbcType=DECIMAL},
+      </if>
+      <if test="dictName != null" >
+        #{dictName,jdbcType=VARCHAR},
+      </if>
+      <if test="dictCode != null" >
+        #{dictCode,jdbcType=VARCHAR},
+      </if>
+      <if test="parentDictId != null" >
+        #{parentDictId,jdbcType=DECIMAL},
+      </if>
+      <if test="seq != null" >
+        #{seq,jdbcType=DECIMAL},
+      </if>
+      <if test="showFlag != null" >
+        #{showFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="siteId != null" >
+        #{siteId,jdbcType=DECIMAL},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=DATE},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=DECIMAL},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=DATE},
+      </if>
+      <if test="updateUser != null" >
+        #{updateUser,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ykk.Dict" >
+    update UPIOW.TBL_DICT
+    <set >
+      <if test="dictName != null" >
+        DICT_NAME = #{dictName,jdbcType=VARCHAR},
+      </if>
+      <if test="dictCode != null" >
+        DICT_CODE = #{dictCode,jdbcType=VARCHAR},
+      </if>
+      <if test="parentDictId != null" >
+        PARENT_DICT_ID = #{parentDictId,jdbcType=DECIMAL},
+      </if>
+      <if test="seq != null" >
+        SEQ = #{seq,jdbcType=DECIMAL},
+      </if>
+      <if test="showFlag != null" >
+        SHOW_FLAG = #{showFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="siteId != null" >
+        SITE_ID = #{siteId,jdbcType=DECIMAL},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=DATE},
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER = #{createUser,jdbcType=DECIMAL},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=DATE},
+      </if>
+      <if test="updateUser != null" >
+        UPDATE_USER = #{updateUser,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where DICT_ID = #{dictId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ykk.Dict" >
+    update UPIOW.TBL_DICT
+    set DICT_NAME = #{dictName,jdbcType=VARCHAR},
+      DICT_CODE = #{dictCode,jdbcType=VARCHAR},
+      PARENT_DICT_ID = #{parentDictId,jdbcType=DECIMAL},
+      SEQ = #{seq,jdbcType=DECIMAL},
+      SHOW_FLAG = #{showFlag,jdbcType=VARCHAR},
+      SITE_ID = #{siteId,jdbcType=DECIMAL},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=DATE},
+      CREATE_USER = #{createUser,jdbcType=DECIMAL},
+      UPDATE_TIME = #{updateTime,jdbcType=DATE},
+      UPDATE_USER = #{updateUser,jdbcType=DECIMAL}
+    where DICT_ID = #{dictId,jdbcType=DECIMAL}
+  </update>
+</mapper>
