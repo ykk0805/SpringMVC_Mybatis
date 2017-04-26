@@ -29,7 +29,7 @@
     delete from UPIOW.TBL_DICT
     where DICT_ID = #{dictId,jdbcType=DECIMAL}
   </delete>
-  <insert id="insert" parameterType=ykk.common.domain.Dict >
+  <insert id="insert" parameterType= "ykk.common.domain.Dict" >
     insert into UPIOW.TBL_DICT (DICT_ID, DICT_NAME, DICT_CODE, 
       PARENT_DICT_ID, SEQ, SHOW_FLAG, 
       SITE_ID, REMARK, CREATE_TIME, 
@@ -41,7 +41,7 @@
       #{createUser,jdbcType=DECIMAL}, #{updateTime,jdbcType=DATE}, #{updateUser,jdbcType=DECIMAL}
       )
   </insert>
-  <insert id="insertSelective" parameterType=ykk.common.domain.Dict >
+  <insert id="insertSelective" parameterType="ykk.common.domain.Dict" >
     insert into UPIOW.TBL_DICT
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="dictId != null" >

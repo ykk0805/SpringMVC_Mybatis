@@ -17,7 +17,7 @@ import ykk.common.service.DictService;
 @Transactional
 public class DictServiceImpl implements DictService {
 	
-	@Resource
+	@Autowired
 	private DictMapper dictMapper; 
 	
 	public Dict getDict(Long dictId) {

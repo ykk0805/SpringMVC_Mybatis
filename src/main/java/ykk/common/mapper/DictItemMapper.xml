@@ -30,7 +30,7 @@
     delete from UPIOW.TBL_DICT_ITEM
     where ITEM_ID = #{itemId,jdbcType=DECIMAL}
   </delete>
-  <insert id="insert" parameterType=ykk.common.domain.DictItem >
+  <insert id="insert" parameterType="ykk.common.domain.DictItem"  >
     insert into UPIOW.TBL_DICT_ITEM (ITEM_ID, DICT_ID, ITEM_CODE, 
       ITEM_NAME, SN_NO, LANGUAGE, 
       SEQ, SHOW_FLAG, REMARK, 
