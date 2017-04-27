@@ -1,14 +1,12 @@
 package ykk.common.controller;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import ykk.common.domain.Dict;
 import ykk.common.service.DictService;
 
 @Controller
@@ -20,9 +18,12 @@ public class DictItemController {
 	
 	private static Logger log = Logger.getLogger(DictItemController.class);
 	
-	@RequestMapping(value= "/test" , method = RequestMethod.GET)
-	public String Test (HttpServletRequest request,Model model) {
-		System.out.println("1111111");
-		return "index";
+	@RequestMapping(value= "/getDict" , method = RequestMethod.GET)
+	public String getDict (Long dictId) {
+		Dict dict = dictService.getDict(dictId);
+		StringBuffer sb = new StringBuffer();
+		sb.append("<h6>").append(dict.getDictName()).append("</h6>");
+		System.out.println(sb.toString());
+		return sb.toString();
 	}
 }

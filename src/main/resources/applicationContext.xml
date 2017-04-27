@@ -22,20 +22,15 @@
 	<context:component-scan
 		base-package="ykk.**.service.impl"/>
 	
-	<!-- 使用annotation定义事务 -->
-	<tx:annotation-driven transaction-manager="transactionManager"
-		proxy-target-class="true" />
-
 	<!-- 引入配置文件 -->  
 	    <context:property-placeholder location="classpath*:/application.properties" />
 
-		<!-- Tomcat JDBC连接池 -->
-		<bean id="dataSource" class="org.apache.tomcat.jdbc.pool.DataSource"
+		<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 			destroy-method="close">
-			<property name="driverClassName" value="${jdbc.driver}" />
-			<property name="url" value="${jdbc.url}" />
-			<property name="username" value="${jdbc.username}" />
-			<property name="password" value="${jdbc.password}" />
+			<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+			<property name="url" value="jdbc:oracle:thin:localhost:1521:ORCL" />
+			<property name="username" value="upiow" />
+			<property name="password" value="upiow" />
 			<property name="defaultAutoCommit" value="false" />
 			
 			<!-- Connection Pooling Info -->
@@ -44,17 +39,12 @@
        		
       		<!-- 超过时间限制，回收没有用(废弃)的连接（默认为 300秒，调整为180） -->
       		<property name="removeAbandonedTimeout"><value>30000</value></property>
-        	<!-- 超过removeAbandonedTimeout时间后，是否进 行没用连接（废弃）的回收（默认为false，调整为true) -->
-      		<property name="removeAbandoned"><value>true</value></property>
-			<!-- sql 心跳 -->
-			<!--打开检查,用异步线程evict进行检查 -->
- 			<property name="testWhileIdle"><value>true</value></property> 
-	        <property name="testOnBorrow"><value>false</value></property>
-	        <property name="testOnReturn"><value>false</value></property>
-	        <property name="validationQuery"><value>select 1 from dual</value></property>
- 			<!-- 连接Idle一个小时后超时 -->
-			<property name="timeBetweenEvictionRunsMillis" value="3000" />
-			<property name="minEvictableIdleTimeMillis" value="3000" />
 		</bean>
 		<import resource="applicationContext-mybatis.xml"/>
+		
+		<!-- (事务管理)transaction manager, use JtaTransactionManager for global tx -->  
+	    <bean id="transactionManager"  
+	        class="org.springframework.jdbc.datasource.DataSourceTransactionManager">  
+	        <property name="dataSource" ref="dataSource" />  
+	    </bean> 
 </beans>
