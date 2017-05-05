@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import ykk.common.domain.Dict;
 import ykk.common.service.DictService;
@@ -19,6 +20,7 @@ public class DictItemController {
 	private static Logger log = Logger.getLogger(DictItemController.class);
 	
 	@RequestMapping(value= "/getDict" , method = RequestMethod.GET)
+	@ResponseBody
 	public String getDict (Long dictId) {
 		Dict dict = dictService.getDict(dictId);
 		StringBuffer sb = new StringBuffer();
