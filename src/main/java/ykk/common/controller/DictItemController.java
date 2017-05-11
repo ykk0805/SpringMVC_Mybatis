@@ -1,6 +1,5 @@
 package ykk.common.controller;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +16,6 @@ public class DictItemController {
 	@Autowired
 	private DictService dictService;
 	
-	private static Logger log = Logger.getLogger(DictItemController.class);
 	
 	@RequestMapping(value= "/getDict" , method = RequestMethod.GET)
 	@ResponseBody
