@@ -1,12 +1,13 @@
 package ykk.common.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import ykk.common.domain.Dict;
 import ykk.common.service.DictService;
 
 @Controller
@@ -16,14 +17,13 @@ public class DictItemController {
 	@Autowired
 	private DictService dictService;
 	
+	private final static Logger logger = LoggerFactory.getLogger(DictItemController.class); 
 	
-	@RequestMapping(value= "/getDict" , method = RequestMethod.GET)
-	@ResponseBody
-	public String getDict (Long dictId) {
-		Dict dict = dictService.getDict(dictId);
-		StringBuffer sb = new StringBuffer();
-		sb.append("<h6>").append(dict.getDictName()).append("</h6>");
-		System.out.println(sb.toString());
-		return sb.toString();
+	@RequestMapping(method = RequestMethod.GET)
+	public String getDict (Model model) {
+		String name = "应康康";
+		logger.error("error Logback 成功了");
+		model.addAttribute("name", name);
+		return "index";
 	}
 }

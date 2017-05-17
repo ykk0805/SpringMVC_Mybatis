@@ -4,9 +4,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <title>Insert title here</title>
 </head>
 <body>
-	<h6>跳转成功</h6>
+	<h6>${name}</h6>
 </body>
 </html>
