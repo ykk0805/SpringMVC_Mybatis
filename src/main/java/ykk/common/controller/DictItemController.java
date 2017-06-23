@@ -24,6 +24,6 @@ public class DictItemController {
 		String name = "应康康";
 		logger.error("error Logback 成功了");
 		model.addAttribute("name", name);
-		return "index";
+		return "imageView";
 	}
 }

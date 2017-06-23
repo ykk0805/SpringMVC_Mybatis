@@ -23,28 +23,83 @@
 		base-package="ykk.**.service.impl"/>
 	
 	<!-- 引入配置文件 -->  
-	    <context:property-placeholder location="classpath*:/application.properties" />
+    <context:property-placeholder location="classpath*:/application.properties" />
+    
+    <!-- 定义实体管理器工厂
+         Jpa配置   LocalContainerEntityManagerFactoryBean这个选项Spring扮演了容器的角色。完全掌管JPA -->
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+           <!-- 指定数据源 -->
+        <property name="dataSource" ref="dataSource"/>
+        <!-- 指定Jpa持久化实现厂商类,这里以Hibernate为例 -->
+        <property name="jpaVendorAdapter" ref="hibernateJpaVendorAdapter"/>
+        <!-- 指定Entity实体类包路径 -->
+        <property name="packagesToScan" >
+            <array>
+                <value>ykk.**.domain</value>
+            </array>
+        </property>
+        <!-- 指定JPA属性；如Hibernate中指定是否显示SQL的是否显示、方言等 -->
+        <property name="jpaProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</prop>
+                <prop key="hibernate.ejb.naming_strategy">org.hibernate.cfg.ImprovedNamingStrategy</prop>
+                <prop key="hibernate.cache.provider_class">org.hibernate.cache.NoCacheProvider</prop>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.format_sql">true</prop>
+                <prop key="hibernate.hbm2ddl.auto">validate</prop>
+            </props>
+        </property>
+    </bean>
+    
+    <!-- 重要配置：启用扫描并自动创建代理的功能  -->
+    <jpa:repositories base-package="ykk.**.dao"  transaction-manager-ref="transactionManager" 
+    	entity-manager-factory-ref="entityManagerFactory"/>
+    
+    <!-- Hibernate对Jpa的实现 -->
+    <bean id="hibernateJpaVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
 
-		<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
-			destroy-method="close">
-			<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
-			<property name="url" value="jdbc:oracle:thin:localhost:1521:ORCL" />
-			<property name="username" value="upiow" />
-			<property name="password" value="upiow" />
-			<property name="defaultAutoCommit" value="false" />
-			
-			<!-- Connection Pooling Info -->
-			<property name="maxActive" value="${jdbc.pool.maxActive}" />
-			<property name="maxIdle" value="${jdbc.pool.maxIdle}" />
-       		
-      		<!-- 超过时间限制，回收没有用(废弃)的连接（默认为 300秒，调整为180） -->
-      		<property name="removeAbandonedTimeout"><value>30000</value></property>
-		</bean>
-		<import resource="applicationContext-mybatis.xml"/>
+    <!-- Jpa 事务管理器  -->
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+    <!-- 使用annotation定义事务 -->
+	<tx:annotation-driven transaction-manager="transactionManager"
+		proxy-target-class="true" />
+
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="${jdbc.driver}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+		<property name="defaultAutoCommit" value="false" />
 		
-		<!-- (事务管理)transaction manager, use JtaTransactionManager for global tx -->  
-	    <bean id="transactionManager"  
-	        class="org.springframework.jdbc.datasource.DataSourceTransactionManager">  
-	        <property name="dataSource" ref="dataSource" />  
-	    </bean> 
+		<!-- Connection Pooling Info -->
+		<property name="maxActive" value="${jdbc.pool.maxActive}" />
+		<property name="maxIdle" value="${jdbc.pool.maxIdle}" />
+      		
+   		<!-- 超过时间限制，回收没有用(废弃)的连接（默认为 300秒，调整为180） -->
+   		<property name="removeAbandonedTimeout"><value>30000</value></property>
+   		<!-- 超过removeAbandonedTimeout时间后，是否进 行没用连接（废弃）的回收（默认为false，调整为true) -->
+   		<property name="removeAbandoned"><value>true</value></property>
+     	<!-- sql 心跳 -->
+		<!--打开检查,用异步线程evict进行检查 ;需设置参数timeBetweenEvictionRunsMillis>0),
+			定时对线程池中的链接进行validationQuery校验，对无效的链接进行关闭后，并适当建立链接保证最小的minIdle连接数-->
+		<property name="testWhileIdle"><value>true</value></property> 
+        <property name="testOnBorrow"><value>false</value></property>
+        <property name="testOnReturn"><value>false</value></property>
+        <property name="validationQuery"><value>select 1 from dual</value></property>
+		<!-- 连接Idle一个小时后超时 -->
+		<!-- 设置的Evict线程的时间，单位ms，大于0才会开启evict检查线程 -->
+		<property name="timeBetweenEvictionRunsMillis" value="3000" />
+		<property name="minEvictableIdleTimeMillis" value="3000" />	
+	</bean>
+		
+	<import resource="applicationContext-mybatis.xml"/>
+		
+	<!-- (事务管理)transaction manager, use JtaTransactionManager for global tx -->  
+    <!-- <bean id="transactionManager"  
+        class="org.springframework.jdbc.datasource.DataSourceTransactionManager">  
+        <property name="dataSource" ref="dataSource" />  
+    </bean>  -->
 </beans>

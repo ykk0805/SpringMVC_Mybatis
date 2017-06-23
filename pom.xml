@@ -9,7 +9,10 @@
   	
   	<properties>  
         <!-- spring版本号 -->  
-        <spring.version>4.1.7.RELEASE</spring.version>  
+        <spring.version>4.1.7.RELEASE</spring.version>
+        <!--jpa  -->
+        <spring-data-jpa.version>1.4.5.RELEASE</spring-data-jpa.version> 
+        <hibernate.version>4.2.3.Final</hibernate.version>
         <!-- mybatis版本号   -->
         <mybatis.version>3.3.0</mybatis.version>  
         <!-- log4j日志文件管理包版本 -->  
@@ -86,6 +89,12 @@
             <artifactId>spring-test</artifactId>  
             <version>${spring.version}</version>  
         </dependency>  
+        <!-- spring orm -->
+        <dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
         <!-- mybatis核心包   -->
         <dependency>  
             <groupId>org.mybatis</groupId>  
@@ -98,7 +107,34 @@
             <artifactId>mybatis-spring</artifactId>  
             <version>1.2.3</version>  
         </dependency>  
-        
+        <!-- hibernate -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-ehcache</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+        <!-- spring data jpa -->
+        <dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-jpa</artifactId>
+			<version>${spring-data-jpa.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>junit</groupId>
+					<artifactId>junit-dep</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
         <!--  导入java ee jar 包   -->
          <dependency>
 			<groupId>javax.servlet</groupId>
@@ -195,6 +231,17 @@
 			<groupId>com.github.pagehelper</groupId>
 			<artifactId>pagehelper</artifactId>
 			<version>${pagehelper.version}</version>
+		</dependency>
+		<!-- 定时任务 Quartz Scheduler   -->
+		<dependency>
+		    <groupId>org.quartz-scheduler</groupId>
+		    <artifactId>quartz</artifactId>
+		    <version>2.2.1</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.quartz-scheduler</groupId>
+		    <artifactId>quartz-jobs</artifactId>
+		    <version>2.2.1</version>
 		</dependency>
     </dependencies>
   	<!-- 插件 -->

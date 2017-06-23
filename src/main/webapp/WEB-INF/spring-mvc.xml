@@ -30,10 +30,11 @@
     <!--
 		配置静态资源，直接映射到对应的文件夹，不被DispatcherServlet处理，3.04新增功能，需要重新设置spring-mvc-3.0.xsd
 	-->
-	<!-- <mvc:resources mapping="/img/**" location="/img/" />
-	<mvc:resources mapping="/css/**" location="/css/" />
-	<mvc:resources mapping="/html/**" location="/html/" />
-	<mvc:resources location="/js/"  mapping="/js/**" /> -->
+	<mvc:resources mapping="/static/**" location="/static/" /> 
+	<!--页面静态文件导入上下2选一  -->
+	
+	<!-- 容器默认的DefaultServletHandler处理 所有静态内容与无RequestMapping处理的URL -->
+	<!-- <mvc:default-servlet-handler /> -->
 	
     <!-- 定义跳转的文件的前后缀 ，视图模式配置-->
 	<bean id="viewResolver"
