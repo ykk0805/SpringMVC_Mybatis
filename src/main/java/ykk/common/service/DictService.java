@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import ykk.common.domain.Dict;
+import ykk.common.domain.Upload;
 
 public interface DictService {
 	
@@ -19,4 +20,6 @@ public interface DictService {
 	 * @return
 	 */
 	public List<Dict> listDicts(Map<String, Object> map);
+	
+	public List<Upload> listAll();
 }

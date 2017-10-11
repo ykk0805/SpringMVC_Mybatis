@@ -5,7 +5,6 @@
   <version>0.0.1-SNAPSHOT</version>
   <packaging>war</packaging>
   <name>maven-test Maven Webapp</name>
-  <url>https://repo.maven.apache.org/maven2</url>
   	
   	<properties>  
         <!-- spring版本号 -->  
@@ -143,12 +142,11 @@
 			<scope>provided</scope>
 		</dependency>
 		
-        <dependency>
-        	<groupId>com.oracle</groupId>
-        	<artifactId>ojdbc6</artifactId>
-        	<version>10.2.0.4.0</version>
-	    </dependency>
-        
+		<dependency>
+			<groupId>ojdbc6</groupId>
+			<artifactId>ojdbc6</artifactId>
+			<version>11</version>
+		</dependency>
         <dependency>  
             <groupId>mysql</groupId>  
             <artifactId>mysql-connector-java</artifactId>  

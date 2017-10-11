@@ -9,6 +9,16 @@
     <title>Document</title>  
     <!-- <script type="text/javascript" src="http://libs.baidu.com/jquery/1.10.2/jquery.min.js"></script>  -->
     <script type="text/javascript" src="${ctx}/static/js/jquery/jquery-1.11.1.min.js"></script>  
+    
+    </head>  
+    <body>  
+        <form enctype="multipart/form-date" method="post">  
+            <input type="file" class="file">  
+            <input type="submit" class="sub">  
+        </form>  
+        <img src="" class="fileImg">  
+    </body>  
+    
     <script type="text/javascript">  
 	    $(function(){  
 	        $(".file").change(function(){  
@@ -35,14 +45,6 @@
 	                }  
 	            }  
 	        })  
-	    })  
+	    });
     </script>  
-    </head>  
-    <body>  
-        <form enctype="multipart/form-date" method="post">  
-            <input type="file" class="file">  
-            <input type="submit" class="sub">  
-        </form>  
-        <img src="" class="fileImg">  
-    </body>  
 </html>
